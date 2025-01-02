@@ -1,0 +1,81 @@
+version: 2
+
+project_name: txtract
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: txtract
+    dir: "."
+    main: "."
+    binary: txtract
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - "386"
+      - amd64
+      - arm64
+    goarm:
+      - "7"
+    goamd64:
+      - v3
+
+brews:
+  - repository:
+      owner: FollowTheProcess
+      name: homebrew-tap
+      token: "{{.Env.HOMEBREW_TAP_TOKEN}}"
+    goarm: "7"
+    directory: Formula
+    commit_author:
+      name: Tom Fleet
+      email: tomfleet2018@gmail.com
+    homepage: https://github.com/FollowTheProcess/txtract
+    description: A CLI to interact with txtar archive files
+    license: Apache Software License 2.0
+    install: |
+      bin.install "txtract"
+    test: |
+      "#{bin}/txtract --version"
+
+archives:
+  - id: txtract
+    name_template: >-
+      {{ .ProjectName }}-
+      {{- .Version }}-
+      {{- .Os }}-
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+
+sboms:
+  - id: txtract
+    artifacts: archive
+    documents:
+      - >-
+        {{ .ProjectName }}-
+        {{- .Version }}-
+        {{- .Os }}-
+        {{- if eq .Arch "amd64" }}x86_64
+        {{- else if eq .Arch "386" }}i386
+        {{- else }}{{ .Arch }}{{ end }}.sbom
+
+checksum:
+  name_template: checksums.txt
+
+snapshot:
+  version_template: "{{ .Tag }}-dev{{ .ShortCommit }}"
+
+changelog:
+  # The changelog is handled by release drafter
+  disable: true
