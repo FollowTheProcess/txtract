@@ -30,13 +30,13 @@ tasks:
         msg: golines not installed, run `go install github.com/segmentio/golines@latest`
     cmds:
       - go fmt ./...
-      - golines . --ignore-generated --write-output
+      - golines . --ignore-generated --write-output --max-len 140
 
   test:
     desc: Run the test suite
     sources:
       - "**/*.go"
-    cmds: 
+    cmds:
       - go test -race ./... {{ .CLI_ARGS }}
 
   build:
@@ -55,7 +55,7 @@ tasks:
     desc: Run all project benchmarks
     sources:
       - "**/*.go"
-    cmds: 
+    cmds:
       - go test ./... -run None -benchmem -bench . {{ .CLI_ARGS }}
 
   lint:

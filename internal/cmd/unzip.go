@@ -1,9 +1,8 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/FollowTheProcess/cli"
+	"github.com/FollowTheProcess/txtract/internal/app"
 )
 
 const unzipLong = `
@@ -22,33 +21,25 @@ If the output directory does not exist, it will be created automatically.
 
 // buildUnzipCommand constructs and returns the unzip subcommand.
 func buildUnzipCommand() (*cli.Command, error) {
-	var output string
+	var (
+		output string
+		debug  bool
+		force  bool
+	)
 	return cli.New(
 		"unzip",
 		cli.Short("Unzip a txtar archive into the filesystem"),
 		cli.Long(unzipLong),
 		cli.Example("Unzip a txtar test case to testdata", "txtract unzip ./TestMyThing.txtar"),
-		cli.Example(
-			"Save to another location",
-			"txtract unzip ./TestMyThing.txtar --output ../somewhere/else/",
-		),
+		cli.Example("Save to another location", "txtract unzip ./TestMyThing.txtar --output ../somewhere/else/"),
 		cli.Allow(cli.MaxArgs(1)), // Only 1 txtar file allowed
 		cli.Arg("archive", "The path to the txtar archive to unzip", ""),
-		cli.Flag(
-			&output,
-			"output",
-			'o',
-			"",
-			"Path to a directory under which to unzip the archive",
-		),
+		cli.Flag(&output, "output", 'o', ".", "Path of a directory under which to unzip the archive, [default: cwd]"),
+		cli.Flag(&force, "force", 'f', false, "Overwrite existing files and directories"),
+		cli.Flag(&debug, "debug", cli.NoShortHand, false, "Output debug info to stderr"),
 		cli.Run(func(cmd *cli.Command, args []string) error {
-			fmt.Fprintf(
-				cmd.Stdout(),
-				"unzip called with archive: %s, output: %s\n",
-				cmd.Arg("archive"),
-				output,
-			)
-			return nil
+			txtract := app.New(cmd.Stdout(), cmd.Stderr(), debug)
+			return txtract.Unzip(cmd.Arg("archive"), output, force)
 		}),
 	)
 }
