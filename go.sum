@@ -1,5 +1,5 @@
-github.com/FollowTheProcess/cli v0.9.0 h1:mZnjUW8IOjwszCoIdmeZkStR0nbAy/xI9dfDek18WKQ=
-github.com/FollowTheProcess/cli v0.9.0/go.mod h1:p3rImroDhYdrZXFRs8MUc2MHmEIWmegZGly7b3M3jL0=
+github.com/FollowTheProcess/cli v0.10.0 h1:C0NXCevm9B93xB4eWRqW3jALnhF+04Ag7oCH2re8iaQ=
+github.com/FollowTheProcess/cli v0.10.0/go.mod h1:p3rImroDhYdrZXFRs8MUc2MHmEIWmegZGly7b3M3jL0=
 github.com/FollowTheProcess/msg v1.3.0 h1:0wyDhyvd+jzjgrJNxObJPgDvO4nJAjfnf63xx5s5FYw=
 github.com/FollowTheProcess/msg v1.3.0/go.mod h1:MfbeMtID8OAN3/p+Vorjw+EV/EdTy/NLSWqRYdScNDQ=
 github.com/FollowTheProcess/snapshot v0.1.0 h1:G5tWpBXVre6cTrmN1OWZLiTnqEi9IKLiewtQQYOnQqc=
