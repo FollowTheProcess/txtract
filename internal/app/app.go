@@ -87,7 +87,7 @@ func (a App) Zip(target, name, location string, force bool) error {
 			if err != nil {
 				return fmt.Errorf("could not read %s: %w", path, err)
 			}
-			err = archive.Add(path, contents)
+			err = archive.Add(filepath.ToSlash(path), contents)
 			if err != nil {
 				return fmt.Errorf("could not add %s to archive: %w", path, err)
 			}
