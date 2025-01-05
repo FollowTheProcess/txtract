@@ -24,7 +24,6 @@ by using the --force flag.
 
 // buildZipCommand constructs and returns the zip subcommand.
 func buildZipCommand() (*cli.Command, error) {
-	// TODO(@FollowTheProcess): An options struct
 	var (
 		output string
 		name   string

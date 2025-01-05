@@ -1,0 +1,17 @@
+-- testdata/TestZip/dir1/items.txt --
+My items are:
+
+- Pancakes
+- Milk
+- Maple Syrup
+- Coffee
+-- testdata/TestZip/dir1/response.json --
+{
+  "admin": false,
+  "msg": "Hello from some API",
+  "user_id": 123
+}
+-- testdata/TestZip/file.txt --
+I'm a top level file in the testdata directory
+-- testdata/TestZip/nested/directories/here/found.txt --
+You've found me!
