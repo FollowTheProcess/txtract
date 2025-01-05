@@ -14,7 +14,8 @@ name may be overridden using the --name flag.
 
 The directory is traversed recursively by default so nested sub directories and files
 will be included in the final archive, with the names of the files being set to their
-path relative to the top level directory.
+path relative to the top level directory. Note that file paths are stored in the archive
+with the unix separator ('/') regardless of the host platform.
 
 If the directory does not exist or is empty, zip will return an error and exit.
 
@@ -24,7 +25,6 @@ by using the --force flag.
 
 // buildZipCommand constructs and returns the zip subcommand.
 func buildZipCommand() (*cli.Command, error) {
-	// TODO(@FollowTheProcess): An options struct
 	var (
 		output string
 		name   string
