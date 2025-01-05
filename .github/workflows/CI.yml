@@ -37,7 +37,7 @@ jobs:
       - name: Run Tests
         run: go test -race ./...
         env:
-          NO_COLOR: true
+          NO_COLOR: "true"
 
   cov:
     name: CodeCov
