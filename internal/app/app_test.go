@@ -33,5 +33,7 @@ func TestZip(t *testing.T) {
 	contents, err := os.ReadFile(archive)
 	test.Ok(t, err)
 
+	contents = bytes.ReplaceAll(contents, []byte("\r\n"), []byte("\n"))
+
 	test.File(t, string(contents), filepath.Join("testdata", "TestZip.txtar"))
 }
