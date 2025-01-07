@@ -59,16 +59,16 @@ func (a App) log(msg string, attrs ...slog.Attr) {
 func (a App) Zip(target, name, location string, force bool) error {
 	if name == "" {
 		// No override for name so use the target dir
-		name = target
+		name = filepath.Base(target)
 	}
 
-	path := filepath.Join(location, name)
-	path += ".txtar"
+	outPath := filepath.Join(location, name)
+	outPath += ".txtar"
 
 	a.log(
 		"zipping dir into txtar archive",
 		slog.String("dir", target),
-		slog.String("archive", path),
+		slog.String("archive", outPath),
 		slog.Bool("force", force),
 	)
 
@@ -100,19 +100,19 @@ func (a App) Zip(target, name, location string, force bool) error {
 	}
 
 	// Now write the archive to the given location
-	dir := filepath.Dir(path)
+	dir := filepath.Dir(outPath)
 	if err = os.MkdirAll(dir, defaultDirPermissions); err != nil {
 		return fmt.Errorf("could not create target directory %s: %w", dir, err)
 	}
 
-	file, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, defaultFilePermissions)
+	file, err := os.OpenFile(outPath, os.O_CREATE|os.O_RDWR, defaultFilePermissions)
 	if err != nil {
-		return fmt.Errorf("could not open target file %s: %w", path, err)
+		return fmt.Errorf("could not open target file %s: %w", outPath, err)
 	}
 	defer file.Close()
 
 	if err := txtar.Dump(file, archive); err != nil {
-		return fmt.Errorf("could not write archive to %s: %w", path, err)
+		return fmt.Errorf("could not write archive to %s: %w", outPath, err)
 	}
 
 	return nil

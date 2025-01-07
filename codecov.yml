@@ -1,0 +1,2 @@
+ignore:
+  - internal/cmd # Just the CLI definition in here

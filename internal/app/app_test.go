@@ -28,12 +28,16 @@ func TestZip(t *testing.T) {
 	test.Ok(t, err)
 
 	// Now should be a txtar file called TestZip.txtar inside tmp
-	archive := filepath.Join(tmp, "testdata", "TestZip.txtar")
+	archive := filepath.Join(tmp, "TestZip.txtar")
 
 	contents, err := os.ReadFile(archive)
 	test.Ok(t, err)
 
 	contents = bytes.ReplaceAll(contents, []byte("\r\n"), []byte("\n"))
+	golden := filepath.Join("testdata", "TestZip.txtar")
 
-	test.File(t, string(contents), filepath.Join("testdata", "TestZip.txtar"))
+	goldenContents, err := os.ReadFile(golden)
+	test.Ok(t, err)
+
+	test.DiffBytes(t, contents, goldenContents)
 }
