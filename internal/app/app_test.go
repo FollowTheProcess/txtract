@@ -37,6 +37,7 @@ func TestZip(t *testing.T) {
 	golden := filepath.Join("testdata", "TestZip.txtar")
 
 	goldenContents, err := os.ReadFile(golden)
+	goldenContents = bytes.ReplaceAll(goldenContents, []byte("\r\n"), []byte("\n"))
 	test.Ok(t, err)
 
 	test.DiffBytes(t, contents, goldenContents)
