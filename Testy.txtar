@@ -1,0 +1,17 @@
+-- dir1/items.txt --
+My items are:
+
+- Pancakes
+- Milk
+- Maple Syrup
+- Coffee
+-- dir1/response.json --
+{
+  "admin": false,
+  "msg": "Hello from some API",
+  "user_id": 123
+}
+-- file.txt --
+I'm a top level file in the testdata directory
+-- nested/directories/here/found.txt --
+You've found me!

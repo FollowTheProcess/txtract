@@ -11,6 +11,7 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/FollowTheProcess/txtar"
 )
@@ -57,8 +58,9 @@ func (a App) log(msg string, attrs ...slog.Attr) {
 //
 // Force controls whether or not to overwrite the archive if it already exists.
 func (a App) Zip(target, name, location string, force bool) error {
+	// TODO(@FollowTheProcess): Respect force
 	if name == "" {
-		// No override for name so use the target dir
+		// No override for name so use the target dir's name
 		name = filepath.Base(target)
 	}
 
@@ -129,5 +131,35 @@ func (a App) Unzip(target, location string, force bool) error {
 		slog.String("location", location),
 		slog.Bool("force", force),
 	)
+
+	// TODO(@FollowTheProcess): Respect force
+	file, err := os.Open(target)
+	if err != nil {
+		return fmt.Errorf("could not open %s: %w", target, err)
+	}
+	defer file.Close()
+
+	archive, err := txtar.Parse(file)
+	if err != nil {
+		return fmt.Errorf("could not parse %s as txtar archive: %w", target, err)
+	}
+
+	// Name of the txtar archive file, to be used as the directory under which to unzip
+	// the archive
+	name := strings.TrimSuffix(filepath.Base(target), filepath.Ext(target))
+
+	for path, contents := range archive.Files() {
+		path = filepath.Join(location, name, path)
+		// Ensure that if the path is nested, all the directories get created
+		dir := filepath.Dir(path)
+		if err := os.MkdirAll(dir, defaultDirPermissions); err != nil {
+			return fmt.Errorf("could not create directory %s: %w", dir, err)
+		}
+
+		if err := os.WriteFile(path, contents, defaultFilePermissions); err != nil {
+			return fmt.Errorf("could not write to %s: %w", path, err)
+		}
+	}
+
 	return nil
 }

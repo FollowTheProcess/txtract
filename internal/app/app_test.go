@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/FollowTheProcess/test"
+	"github.com/FollowTheProcess/txtar"
 	"github.com/FollowTheProcess/txtract/internal/app"
 )
 
@@ -41,4 +42,36 @@ func TestZip(t *testing.T) {
 	test.Ok(t, err)
 
 	test.DiffBytes(t, contents, goldenContents)
+}
+
+func TestUnzip(t *testing.T) {
+	stdout := &bytes.Buffer{}
+	stderr := io.Discard // Only logs go here anyway
+	testApp := app.New(stdout, stderr, false)
+
+	tmp, err := os.MkdirTemp("", "TestUnzip*")
+	test.Ok(t, err)
+	t.Cleanup(func() {
+		os.RemoveAll(tmp)
+	})
+
+	archiveFile := filepath.Join("testdata", "TestUnzip.txtar")
+	file, err := os.Open(archiveFile)
+	test.Ok(t, err)
+	defer file.Close()
+
+	archive, err := txtar.Parse(file)
+	test.Ok(t, err)
+
+	err = testApp.Unzip(archiveFile, tmp, false)
+	test.Ok(t, err)
+
+	// We should now have real files and directories, all under location
+	for path, wantContents := range archive.Files() {
+		path = filepath.Join(tmp, "TestUnzip", path)
+		gotContents, err := os.ReadFile(path)
+		test.Ok(t, err)
+
+		test.DiffBytes(t, gotContents, wantContents)
+	}
 }
