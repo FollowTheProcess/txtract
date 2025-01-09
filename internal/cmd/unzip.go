@@ -34,7 +34,7 @@ func buildUnzipCommand() (*cli.Command, error) {
 		cli.Example("Save to another location", "txtract unzip ./TestMyThing.txtar --output ../somewhere/else/"),
 		cli.Allow(cli.MaxArgs(1)), // Only 1 txtar file allowed
 		cli.RequiredArg("archive", "The path to the txtar archive to unzip"),
-		cli.Flag(&output, "output", 'o', ".", "Path of a directory under which to unzip the archive, [default: cwd]"),
+		cli.Flag(&output, "output", 'o', ".", "Base directory to unzip under [default $CWD]"),
 		cli.Flag(&force, "force", 'f', false, "Overwrite existing files and directories"),
 		cli.Flag(&debug, "debug", cli.NoShortHand, false, "Output debug info to stderr"),
 		cli.Run(func(cmd *cli.Command, args []string) error {
