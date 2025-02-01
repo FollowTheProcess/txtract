@@ -69,15 +69,22 @@ tasks:
       - sh: command -v golangci-lint
         msg: golangci-lint not installed, see https://golangci-lint.run/usage/install/#local-installation
 
-      - sh: command -v betteralign
-        msg: requires betteralign, run `go install github.com/dkorunic/betteralign/cmd/betteralign@latest`
-
       - sh: command -v typos
         msg: requires typos-cli, run `brew install typos-cli`
     cmds:
-      - betteralign -test_files -apply ./...
       - golangci-lint run --fix
       - typos
+
+  demo:
+    desc: Render the demo gifs
+    sources:
+      - ./docs/src/*.tape
+      - "**/*.go"
+    preconditions:
+      - sh: command -v vhs
+        msg: vhs not installed, see https://github.com/charmbracelet/vhs
+    cmds:
+      - for file in ./docs/src/*.tape; do vhs "$file"; done
 
   cov:
     desc: Calculate test coverage and render the html

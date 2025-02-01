@@ -6,14 +6,18 @@
 [![CI](https://github.com/FollowTheProcess/txtract/workflows/CI/badge.svg)](https://github.com/FollowTheProcess/txtract/actions?query=workflow%3ACI)
 [![codecov](https://codecov.io/gh/FollowTheProcess/txtract/branch/main/graph/badge.svg)](https://codecov.io/gh/FollowTheProcess/txtract)
 
-A CLI to interact with txtar archive files
-
-> [!WARNING]
-> **txtract is in early development and is not yet ready for use**
-
-![caution](./img/caution.png)
+A CLI to interact with txtar archive files 📂
 
 ## Project Description
+
+[txtar] is an incredibly useful tiny archive format, able to trivially store a miniature filesystem in a single plain text file. It particularly shines for storing test cases!
+
+Most of the time a txtar archive is created manually, but what if you already have a directory full of stuff and you want to instead store them in txtar. Or you have a txtar
+archive that you want to instantly replicate on your filesystem!
+
+That's where `txtract` comes in 🚀
+
+![quickstart](https://github.com/FollowTheProcess/txtract/raw/main/docs/img/demo.gif)
 
 ## Installation
 
@@ -25,6 +29,18 @@ brew install FollowTheProcess/tap/txtract
 
 ## Quickstart
 
+Recursively zip up the contents of a directory into a single txtar file named yourdirectory.txtar
+
+```shell
+txtract zip ./yourdirectory
+```
+
+Or go the other way, unzip a txtar file back into your filesystem:
+
+```shell
+txtract unzip yourdirectory.txtar
+```
+
 ### Credits
 
 This package was created with [copier] and the [FollowTheProcess/go_copier] project template.
@@ -33,3 +49,4 @@ This package was created with [copier] and the [FollowTheProcess/go_copier] proj
 [FollowTheProcess/go_copier]: https://github.com/FollowTheProcess/go_copier
 [GitHub release]: https://github.com/FollowTheProcess/txtract/releases
 [homebrew]: https://brew.sh
+[txtar]: https://pkg.go.dev/golang.org/x/tools/txtar
