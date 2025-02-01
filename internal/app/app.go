@@ -58,7 +58,6 @@ func (a App) log(msg string, attrs ...slog.Attr) {
 //
 // Force controls whether or not to overwrite the archive if it already exists.
 func (a App) Zip(target, name, location string, force bool) error {
-	// TODO(@FollowTheProcess): Respect force
 	if name == "" {
 		// No override for name so use the target dir's name
 		name = filepath.Base(target)
@@ -66,6 +65,10 @@ func (a App) Zip(target, name, location string, force bool) error {
 
 	outPath := filepath.Join(location, name)
 	outPath += ".txtar"
+
+	if exists(outPath) && !force {
+		return fmt.Errorf("path %s exists and will not be overwritten without --force", outPath)
+	}
 
 	a.log(
 		"zipping dir into txtar archive",
@@ -132,7 +135,6 @@ func (a App) Unzip(target, location string, force bool) error {
 		slog.Bool("force", force),
 	)
 
-	// TODO(@FollowTheProcess): Respect force
 	file, err := os.Open(target)
 	if err != nil {
 		return fmt.Errorf("could not open %s: %w", target, err)
@@ -150,6 +152,9 @@ func (a App) Unzip(target, location string, force bool) error {
 
 	for path, contents := range archive.Files() {
 		path = filepath.Join(location, name, path)
+		if exists(path) && !force {
+			return fmt.Errorf("path %s exists and will not be overwritten without --force", path)
+		}
 		// Ensure that if the path is nested, all the directories get created
 		dir := filepath.Dir(path)
 		if err := os.MkdirAll(dir, defaultDirPermissions); err != nil {
@@ -162,4 +167,10 @@ func (a App) Unzip(target, location string, force bool) error {
 	}
 
 	return nil
+}
+
+// exists reports whether a path exists in the filesystem.
+func exists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil
 }

@@ -44,7 +44,7 @@ func buildZipCommand() (*cli.Command, error) {
 		cli.Flag(&name, "name", 'n', "", "Name of the txtar file, [default: <dir>]"),
 		cli.Flag(&force, "force", 'f', false, "Overwrite an existing archive"),
 		cli.Flag(&debug, "debug", cli.NoShortHand, false, "Output debug info to stderr"),
-		cli.Run(func(cmd *cli.Command, args []string) error {
+		cli.Run(func(cmd *cli.Command, _ []string) error {
 			txtract := app.New(cmd.Stdout(), cmd.Stderr(), debug)
 			return txtract.Zip(cmd.Arg("dir"), name, output, force)
 		}),

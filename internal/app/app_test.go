@@ -17,15 +17,10 @@ func TestZip(t *testing.T) {
 	stderr := io.Discard // Only logs go here anyway
 	testApp := app.New(stdout, stderr, false)
 
-	tmp, err := os.MkdirTemp("", "TestZip*")
-	test.Ok(t, err)
-	t.Cleanup(func() {
-		os.RemoveAll(tmp)
-	})
-
+	tmp := t.TempDir()
 	target := filepath.Join("testdata", "TestZip")
 
-	err = testApp.Zip(target, "", tmp, false)
+	err := testApp.Zip(target, "", tmp, false)
 	test.Ok(t, err)
 
 	// Now should be a txtar file called TestZip.txtar inside tmp
@@ -49,11 +44,7 @@ func TestUnzip(t *testing.T) {
 	stderr := io.Discard // Only logs go here anyway
 	testApp := app.New(stdout, stderr, false)
 
-	tmp, err := os.MkdirTemp("", "TestUnzip*")
-	test.Ok(t, err)
-	t.Cleanup(func() {
-		os.RemoveAll(tmp)
-	})
+	tmp := t.TempDir()
 
 	archiveFile := filepath.Join("testdata", "TestUnzip.txtar")
 	file, err := os.Open(archiveFile)
