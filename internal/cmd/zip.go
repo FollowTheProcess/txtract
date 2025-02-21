@@ -40,8 +40,8 @@ func buildZipCommand() (*cli.Command, error) {
 		cli.Example("Use a different name", "txtract zip ./mydir --name myarchive"),
 		cli.Allow(cli.MaxArgs(1)), // Only 1 directory allowed
 		cli.RequiredArg("dir", "The directory to zip into a txtar archive"),
-		cli.Flag(&output, "output", 'o', ".", "Path to save the zipped txtar file, [default: cwd]"),
-		cli.Flag(&name, "name", 'n', "", "Name of the txtar file, [default: <dir>]"),
+		cli.Flag(&output, "output", 'o', ".", "Path to save the zipped txtar file"),
+		cli.Flag(&name, "name", 'n', "", "Name of the txtar file, defaults to directory name"),
 		cli.Flag(&force, "force", 'f', false, "Overwrite an existing archive"),
 		cli.Flag(&debug, "debug", cli.NoShortHand, false, "Output debug info to stderr"),
 		cli.Run(func(cmd *cli.Command, _ []string) error {
