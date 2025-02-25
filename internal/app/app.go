@@ -92,7 +92,7 @@ func (a App) Zip(target, name, location string, force bool) error {
 			if err != nil {
 				return fmt.Errorf("could not read %s: %w", path, err)
 			}
-			err = archive.Add(filepath.ToSlash(path), contents)
+			err = archive.Write(filepath.ToSlash(path), string(contents))
 			if err != nil {
 				return fmt.Errorf("could not add %s to archive: %w", path, err)
 			}
@@ -161,7 +161,7 @@ func (a App) Unzip(target, location string, force bool) error {
 			return fmt.Errorf("could not create directory %s: %w", dir, err)
 		}
 
-		if err := os.WriteFile(path, contents, defaultFilePermissions); err != nil {
+		if err := os.WriteFile(path, []byte(contents), defaultFilePermissions); err != nil {
 			return fmt.Errorf("could not write to %s: %w", path, err)
 		}
 	}

@@ -63,6 +63,6 @@ func TestUnzip(t *testing.T) {
 		gotContents, err := os.ReadFile(path)
 		test.Ok(t, err)
 
-		test.DiffBytes(t, gotContents, wantContents)
+		test.Diff(t, string(gotContents), wantContents)
 	}
 }
