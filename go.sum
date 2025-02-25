@@ -6,8 +6,8 @@ github.com/FollowTheProcess/msg v1.5.0 h1:F3kYQVVLwqDGzeWzWaasbB57YxWPD1APGrgYUE
 github.com/FollowTheProcess/msg v1.5.0/go.mod h1:i7TWMrTHik4xv+yD77qF9SSuJScGCvt7vy2ToaZda2g=
 github.com/FollowTheProcess/snapshot v0.4.1 h1:WIwvs+yZrK9886frLbNB98QWkAXTjIGnuvEjURHOrtE=
 github.com/FollowTheProcess/snapshot v0.4.1/go.mod h1:hb3V3azvp8FVrl4pvyhvq/ZYOnFSgyKHfXt96Jgg4e0=
-github.com/FollowTheProcess/test v0.20.2 h1:8/Yw7ny7IVMHIp/dmkGOdDYSUbAy77c+jDq86nfAhOw=
-github.com/FollowTheProcess/test v0.20.2/go.mod h1:4XBQyPoORSO1ZQcXpuopbv1INCAQNB1TY4SF6lGfBwU=
+github.com/FollowTheProcess/test v0.20.3 h1:/i0nbChNxndRC+p1STycnf6WhmLcOT4rd3D63QXcodw=
+github.com/FollowTheProcess/test v0.20.3/go.mod h1:mgq0jCuYg43AnSaKsPAhs8GxKKJf0RxPP0EoqhswXWE=
 github.com/FollowTheProcess/txtar v0.2.0 h1:lYkGQe+tuwxdde1FEdivE9NCtvcLcw8tYQQhw/XiUlQ=
 github.com/FollowTheProcess/txtar v0.2.0/go.mod h1:AnlB34itYqpAjr/ognxVq0ja0TOtTH62RIbBlcWyliY=
 golang.org/x/sys v0.30.0 h1:QjkSwP/36a20jFYWkSue1YwXzLmsV5Gfq7Eiy72C1uc=
