@@ -48,11 +48,6 @@ func New(stdout, stderr io.Writer, debug bool) App {
 	}
 }
 
-// log writes a debug log to stderr.
-func (a App) log(msg string, attrs ...slog.Attr) {
-	a.logger.LogAttrs(context.Background(), slog.LevelDebug, msg, attrs...)
-}
-
 // Zip zips up a filesystem directory into a txtar archive named name under
 // location.
 //
@@ -167,6 +162,11 @@ func (a App) Unzip(target, location string, force bool) error {
 	}
 
 	return nil
+}
+
+// log writes a debug log to stderr.
+func (a App) log(msg string, attrs ...slog.Attr) {
+	a.logger.LogAttrs(context.Background(), slog.LevelDebug, msg, attrs...)
 }
 
 // exists reports whether a path exists in the filesystem.
