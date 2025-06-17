@@ -31,23 +31,26 @@ builds:
     goarm:
       - "7"
 
-brews:
-  - repository:
-      owner: FollowTheProcess
-      name: homebrew-tap
-      token: "{{.Env.HOMEBREW_TAP_TOKEN}}"
-    goarm: "7"
-    directory: Formula
+homebrew_casks:
+  - name: txtract
+    binary: txtract
+    directory: Casks
+    description: A CLI to interact with txtar archive files
+    homepage: https://github.com/FollowTheProcess/txtract
+    conflicts:
+      - formula: txtract
     commit_author:
       name: Tom Fleet
-      email: tomfleet2018@gmail.com
-    homepage: https://github.com/FollowTheProcess/txtract
-    description: A CLI to interact with txtar archive files
-    license: Apache Software License 2.0
-    install: |
-      bin.install "txtract"
-    test: |
-      "#{bin}/txtract --version"
+      email: me@followtheprocess.codes
+    repository:
+      owner: FollowTheProcess
+      name: homebrew-tap
+    hooks:
+      post:
+        install: |
+          if system_command("/usr/bin/xattr", args: ["-h"]).exit_status == 0
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/txtract"]
+          end
 
 archives:
   - id: txtract
