@@ -4,7 +4,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/FollowTheProcess/cli"
+	"go.followtheprocess.codes/cli"
 )
 
 var (
