@@ -15,9 +15,9 @@ builds:
       - -trimpath
     ldflags:
       - -s -w
-      - -X github.com/FollowTheProcess/txtract/internal/cmd.version={{.Version}}
-      - -X github.com/FollowTheProcess/txtract/internal/cmd.commit={{.Commit}}
-      - -X github.com/FollowTheProcess/txtract/internal/cmd.date={{.Date}}
+      - -X go.followtheprocess.codes/txtract/internal/cmd.version={{.Version}}
+      - -X go.followtheprocess.codes/txtract/internal/cmd.commit={{.Commit}}
+      - -X go.followtheprocess.codes/txtract/internal/cmd.date={{.Date}}
     env:
       - CGO_ENABLED=0
     goos:
