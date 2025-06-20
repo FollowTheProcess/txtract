@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"github.com/FollowTheProcess/cli"
 	"github.com/FollowTheProcess/txtract/internal/app"
+	"go.followtheprocess.codes/cli"
 )
 
 const zipLong = `
