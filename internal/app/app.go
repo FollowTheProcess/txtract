@@ -13,7 +13,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/FollowTheProcess/txtar"
+	"go.followtheprocess.codes/txtar"
 )
 
 const (

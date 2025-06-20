@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/FollowTheProcess/txtar"
-	"github.com/FollowTheProcess/txtract/internal/app"
 	"go.followtheprocess.codes/test"
+	"go.followtheprocess.codes/txtar"
+	"go.followtheprocess.codes/txtract/internal/app"
 )
 
 func TestZip(t *testing.T) {

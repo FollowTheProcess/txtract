@@ -24,7 +24,7 @@ That's where `txtract` comes in 🚀
 Compiled binaries for all supported platforms can be found in the [GitHub release]. There is also a [homebrew] tap:
 
 ```shell
-brew install FollowTheProcess/tap/txtract
+brew install -cask FollowTheProcess/tap/txtract
 ```
 
 ## Quickstart
