@@ -37,8 +37,6 @@ homebrew_casks:
     directory: Casks
     description: A CLI to interact with txtar archive files
     homepage: https://github.com/FollowTheProcess/txtract
-    conflicts:
-      - formula: txtract
     commit_author:
       name: Tom Fleet
       email: me@followtheprocess.codes
