@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"go.followtheprocess.codes/cli"
+	"go.followtheprocess.codes/cli/flag"
 	"go.followtheprocess.codes/txtract/internal/app"
 )
 
@@ -25,12 +26,7 @@ by using the --force flag.
 
 // buildZipCommand constructs and returns the zip subcommand.
 func buildZipCommand() (*cli.Command, error) {
-	var (
-		output string
-		name   string
-		debug  bool
-		force  bool
-	)
+	var options app.ZipOptions
 	return cli.New(
 		"zip",
 		cli.Short("Zip an on-disk directory into a txtar archive"),
@@ -38,15 +34,14 @@ func buildZipCommand() (*cli.Command, error) {
 		cli.Example("Zip up the testdata directory", "txtract zip ./testdata"),
 		cli.Example("Save to another location", "txtract zip ./mydir --output ../somewhere/else"),
 		cli.Example("Use a different name", "txtract zip ./mydir --name myarchive"),
-		cli.Allow(cli.MaxArgs(1)), // Only 1 directory allowed
-		cli.RequiredArg("dir", "The directory to zip into a txtar archive"),
-		cli.Flag(&output, "output", 'o', ".", "Path to save the zipped txtar file"),
-		cli.Flag(&name, "name", 'n', "", "Name of the txtar file, defaults to directory name"),
-		cli.Flag(&force, "force", 'f', false, "Overwrite an existing archive"),
-		cli.Flag(&debug, "debug", cli.NoShortHand, false, "Output debug info to stderr"),
-		cli.Run(func(cmd *cli.Command, _ []string) error {
-			txtract := app.New(cmd.Stdout(), cmd.Stderr(), debug)
-			return txtract.Zip(cmd.Arg("dir"), name, output, force)
+		cli.Arg(&options.Dir, "dir", "The directory to zip into a txtar archive"),
+		cli.Flag(&options.Output, "output", 'o', ".", "Path to save the zipped txtar file"),
+		cli.Flag(&options.Name, "name", 'n', "", "Name of the txtar file, defaults to directory name"),
+		cli.Flag(&options.Force, "force", 'f', false, "Overwrite an existing archive"),
+		cli.Flag(&options.Debug, "debug", flag.NoShortHand, false, "Output debug info to stderr"),
+		cli.Run(func(cmd *cli.Command) error {
+			txtract := app.New(cmd.Stdout(), cmd.Stderr(), options.Debug)
+			return txtract.Zip(options)
 		}),
 	)
 }
