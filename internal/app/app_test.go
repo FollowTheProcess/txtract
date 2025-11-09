@@ -20,7 +20,14 @@ func TestZip(t *testing.T) {
 	tmp := t.TempDir()
 	target := filepath.Join("testdata", "TestZip")
 
-	err := testApp.Zip(target, "", tmp, false)
+	options := app.ZipOptions{
+		Dir:    target,
+		Output: tmp,
+		Force:  false,
+		Debug:  false,
+	}
+
+	err := testApp.Zip(options)
 	test.Ok(t, err)
 
 	// Now should be a txtar file called TestZip.txtar inside tmp
@@ -54,7 +61,14 @@ func TestUnzip(t *testing.T) {
 	archive, err := txtar.Parse(file)
 	test.Ok(t, err)
 
-	err = testApp.Unzip(archiveFile, tmp, false)
+	options := app.UnzipOptions{
+		Output:  tmp,
+		Archive: archiveFile,
+		Force:   false,
+		Debug:   false,
+	}
+
+	err = testApp.Unzip(options)
 	test.Ok(t, err)
 
 	// We should now have real files and directories, all under location

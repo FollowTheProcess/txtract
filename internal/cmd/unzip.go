@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"go.followtheprocess.codes/cli"
+	"go.followtheprocess.codes/cli/flag"
 	"go.followtheprocess.codes/txtract/internal/app"
 )
 
@@ -21,25 +22,20 @@ If the output directory does not exist, it will be created automatically.
 
 // buildUnzipCommand constructs and returns the unzip subcommand.
 func buildUnzipCommand() (*cli.Command, error) {
-	var (
-		output string
-		debug  bool
-		force  bool
-	)
+	var options app.UnzipOptions
 	return cli.New(
 		"unzip",
 		cli.Short("Unzip a txtar archive into the filesystem"),
 		cli.Long(unzipLong),
 		cli.Example("Unzip a txtar test case to testdata", "txtract unzip ./TestMyThing.txtar"),
 		cli.Example("Save to another location", "txtract unzip ./TestMyThing.txtar --output ../somewhere/else/"),
-		cli.Allow(cli.MaxArgs(1)), // Only 1 txtar file allowed
-		cli.RequiredArg("archive", "The path to the txtar archive to unzip"),
-		cli.Flag(&output, "output", 'o', ".", "Base directory to unzip under"),
-		cli.Flag(&force, "force", 'f', false, "Overwrite existing files and directories"),
-		cli.Flag(&debug, "debug", cli.NoShortHand, false, "Output debug info to stderr"),
-		cli.Run(func(cmd *cli.Command, _ []string) error {
-			txtract := app.New(cmd.Stdout(), cmd.Stderr(), debug)
-			return txtract.Unzip(cmd.Arg("archive"), output, force)
+		cli.Arg(&options.Archive, "archive", "The path to the txtar archive to unzip"),
+		cli.Flag(&options.Output, "output", 'o', ".", "Base directory to unzip under"),
+		cli.Flag(&options.Force, "force", 'f', false, "Overwrite existing files and directories"),
+		cli.Flag(&options.Debug, "debug", flag.NoShortHand, false, "Output debug info to stderr"),
+		cli.Run(func(cmd *cli.Command) error {
+			txtract := app.New(cmd.Stdout(), cmd.Stderr(), options.Debug)
+			return txtract.Unzip(options)
 		}),
 	)
 }

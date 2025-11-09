@@ -18,7 +18,6 @@ var (
 func Build() (*cli.Command, error) {
 	txtract, err := cli.New(
 		"txtract",
-		cli.Allow(cli.NoArgs()),
 		cli.Short("A CLI to interact with the txtar archive format"),
 		cli.Version(version),
 		cli.Commit(commit),

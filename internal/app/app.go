@@ -48,28 +48,46 @@ func New(stdout, stderr io.Writer, debug bool) App {
 	}
 }
 
+// ZipOptions are the options passed to the zip subcommand.
+type ZipOptions struct {
+	// Output is the path to save the zipped txtar file.
+	Output string
+
+	// Dir is the directory to zip into a txtar archive.
+	Dir string
+
+	// Name is the name of the txtar file, defaults to directory name.
+	Name string
+
+	// Force, if true, overwrites an existing archive.
+	Force bool
+
+	// Debug, if true, outputs debug logs.
+	Debug bool
+}
+
 // Zip zips up a filesystem directory into a txtar archive named name under
 // location.
 //
 // Force controls whether or not to overwrite the archive if it already exists.
-func (a App) Zip(target, name, location string, force bool) error {
-	if name == "" {
+func (a App) Zip(options ZipOptions) error {
+	if options.Name == "" {
 		// No override for name so use the target dir's name
-		name = filepath.Base(target)
+		options.Name = filepath.Base(options.Dir)
 	}
 
-	outPath := filepath.Join(location, name)
+	outPath := filepath.Join(options.Output, options.Name)
 	outPath += ".txtar"
 
-	if exists(outPath) && !force {
+	if exists(outPath) && !options.Force {
 		return fmt.Errorf("path %s exists and will not be overwritten without --force", outPath)
 	}
 
 	a.log(
 		"zipping dir into txtar archive",
-		slog.String("dir", target),
+		slog.String("dir", options.Dir),
 		slog.String("archive", outPath),
-		slog.Bool("force", force),
+		slog.Bool("force", options.Force),
 	)
 
 	archive, err := txtar.New()
@@ -77,7 +95,7 @@ func (a App) Zip(target, name, location string, force bool) error {
 		return err
 	}
 
-	err = filepath.WalkDir(target, func(path string, d fs.DirEntry, err error) error {
+	err = filepath.WalkDir(options.Dir, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return fmt.Errorf("WalkDirFunc err was not nil: %w", err)
 		}
@@ -96,7 +114,7 @@ func (a App) Zip(target, name, location string, force bool) error {
 		return nil
 	})
 	if err != nil {
-		return fmt.Errorf("could not walk directory tree from %s: %w", target, err)
+		return fmt.Errorf("could not walk directory tree from %s: %w", options.Dir, err)
 	}
 
 	// Now write the archive to the given location
@@ -118,36 +136,51 @@ func (a App) Zip(target, name, location string, force bool) error {
 	return nil
 }
 
+// UnzipOptions are the options passed to the unzip subcommand.
+type UnzipOptions struct {
+	// Output is the based directory to unzip under, defaults to ".".
+	Output string
+
+	// Archive is the filepath to the txtar archive to unzip.
+	Archive string
+
+	// Force, if true, overwrites existing files and directories.
+	Force bool
+
+	// Debug, if true, outputs debug logs.
+	Debug bool
+}
+
 // Unzip unzips a txtar archive back into real filesystem directories and files.
 //
 // Force controls whether or not to overwrite existing files and directories with
 // the archive contents.
-func (a App) Unzip(target, location string, force bool) error {
+func (a App) Unzip(options UnzipOptions) error {
 	a.log(
 		"unzipping archive onto filesystem",
-		slog.String("archive", target),
-		slog.String("location", location),
-		slog.Bool("force", force),
+		slog.String("archive", options.Archive),
+		slog.String("output", options.Output),
+		slog.Bool("force", options.Force),
 	)
 
-	file, err := os.Open(target)
+	file, err := os.Open(options.Archive)
 	if err != nil {
-		return fmt.Errorf("could not open %s: %w", target, err)
+		return fmt.Errorf("could not open %s: %w", options.Archive, err)
 	}
 	defer file.Close()
 
 	archive, err := txtar.Parse(file)
 	if err != nil {
-		return fmt.Errorf("could not parse %s as txtar archive: %w", target, err)
+		return fmt.Errorf("could not parse %s as txtar archive: %w", options.Archive, err)
 	}
 
 	// Name of the txtar archive file, to be used as the directory under which to unzip
 	// the archive
-	name := strings.TrimSuffix(filepath.Base(target), filepath.Ext(target))
+	name := strings.TrimSuffix(filepath.Base(options.Archive), filepath.Ext(options.Archive))
 
 	for path, contents := range archive.Files() {
-		path = filepath.Join(location, name, path)
-		if exists(path) && !force {
+		path = filepath.Join(options.Output, name, path)
+		if exists(path) && !options.Force {
 			return fmt.Errorf("path %s exists and will not be overwritten without --force", path)
 		}
 		// Ensure that if the path is nested, all the directories get created
