@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"os"
 
 	"go.followtheprocess.codes/msg"
@@ -15,10 +16,12 @@ func main() {
 }
 
 func run() error {
+	ctx := context.Background()
+
 	cli, err := cmd.Build()
 	if err != nil {
 		return err
 	}
 
-	return cli.Execute()
+	return cli.Execute(ctx)
 }

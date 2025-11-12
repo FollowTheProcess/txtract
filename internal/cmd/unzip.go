@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"context"
+
 	"go.followtheprocess.codes/cli"
 	"go.followtheprocess.codes/cli/flag"
 	"go.followtheprocess.codes/txtract/internal/app"
@@ -30,12 +32,12 @@ func buildUnzipCommand() (*cli.Command, error) {
 		cli.Example("Unzip a txtar test case to testdata", "txtract unzip ./TestMyThing.txtar"),
 		cli.Example("Save to another location", "txtract unzip ./TestMyThing.txtar --output ../somewhere/else/"),
 		cli.Arg(&options.Archive, "archive", "The path to the txtar archive to unzip"),
-		cli.Flag(&options.Output, "output", 'o', ".", "Base directory to unzip under"),
-		cli.Flag(&options.Force, "force", 'f', false, "Overwrite existing files and directories"),
-		cli.Flag(&options.Debug, "debug", flag.NoShortHand, false, "Output debug info to stderr"),
-		cli.Run(func(cmd *cli.Command) error {
+		cli.Flag(&options.Output, "output", 'o', "Base directory to unzip under", cli.FlagDefault(".")),
+		cli.Flag(&options.Force, "force", 'f', "Overwrite existing files and directories"),
+		cli.Flag(&options.Debug, "debug", flag.NoShortHand, "Output debug info to stderr"),
+		cli.Run(func(ctx context.Context, cmd *cli.Command) error {
 			txtract := app.New(cmd.Stdout(), cmd.Stderr(), options.Debug)
-			return txtract.Unzip(options)
+			return txtract.Unzip(ctx, options)
 		}),
 	)
 }

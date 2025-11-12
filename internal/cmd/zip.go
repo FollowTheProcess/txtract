@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"context"
+
 	"go.followtheprocess.codes/cli"
 	"go.followtheprocess.codes/cli/flag"
 	"go.followtheprocess.codes/txtract/internal/app"
@@ -35,13 +37,13 @@ func buildZipCommand() (*cli.Command, error) {
 		cli.Example("Save to another location", "txtract zip ./mydir --output ../somewhere/else"),
 		cli.Example("Use a different name", "txtract zip ./mydir --name myarchive"),
 		cli.Arg(&options.Dir, "dir", "The directory to zip into a txtar archive"),
-		cli.Flag(&options.Output, "output", 'o', ".", "Path to save the zipped txtar file"),
-		cli.Flag(&options.Name, "name", 'n', "", "Name of the txtar file, defaults to directory name"),
-		cli.Flag(&options.Force, "force", 'f', false, "Overwrite an existing archive"),
-		cli.Flag(&options.Debug, "debug", flag.NoShortHand, false, "Output debug info to stderr"),
-		cli.Run(func(cmd *cli.Command) error {
+		cli.Flag(&options.Output, "output", 'o', "Path to save the zipped txtar file", cli.FlagDefault(".")),
+		cli.Flag(&options.Name, "name", 'n', "Name of the txtar file, defaults to directory name"),
+		cli.Flag(&options.Force, "force", 'f', "Overwrite an existing archive"),
+		cli.Flag(&options.Debug, "debug", flag.NoShortHand, "Output debug info to stderr"),
+		cli.Run(func(ctx context.Context, cmd *cli.Command) error {
 			txtract := app.New(cmd.Stdout(), cmd.Stderr(), options.Debug)
-			return txtract.Zip(options)
+			return txtract.Zip(ctx, options)
 		}),
 	)
 }

@@ -70,7 +70,7 @@ type ZipOptions struct {
 // location.
 //
 // Force controls whether or not to overwrite the archive if it already exists.
-func (a App) Zip(options ZipOptions) error {
+func (a App) Zip(ctx context.Context, options ZipOptions) error {
 	if options.Name == "" {
 		// No override for name so use the target dir's name
 		options.Name = filepath.Base(options.Dir)
@@ -155,7 +155,7 @@ type UnzipOptions struct {
 //
 // Force controls whether or not to overwrite existing files and directories with
 // the archive contents.
-func (a App) Unzip(options UnzipOptions) error {
+func (a App) Unzip(ctx context.Context, options UnzipOptions) error {
 	a.log(
 		"unzipping archive onto filesystem",
 		slog.String("archive", options.Archive),

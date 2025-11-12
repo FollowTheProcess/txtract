@@ -27,7 +27,7 @@ func TestZip(t *testing.T) {
 		Debug:  false,
 	}
 
-	err := testApp.Zip(options)
+	err := testApp.Zip(t.Context(), options)
 	test.Ok(t, err)
 
 	// Now should be a txtar file called TestZip.txtar inside tmp
@@ -68,7 +68,7 @@ func TestUnzip(t *testing.T) {
 		Debug:   false,
 	}
 
-	err = testApp.Unzip(options)
+	err = testApp.Unzip(t.Context(), options)
 	test.Ok(t, err)
 
 	// We should now have real files and directories, all under location
