@@ -101,7 +101,7 @@ func (a App) Zip(ctx context.Context, options ZipOptions) error {
 		}
 
 		if !d.IsDir() {
-			contents, err := os.ReadFile(path)
+			contents, err := os.ReadFile(path) //nolint:gosec // symlink traversal not a concern
 			if err != nil {
 				return fmt.Errorf("could not read %s: %w", path, err)
 			}
