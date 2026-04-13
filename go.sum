@@ -4,6 +4,8 @@ go.followtheprocess.codes/cli v0.19.0 h1:V0JjyQyJyu/aHYFFibpnUHfCu0R7qs2BGSZQR7M
 go.followtheprocess.codes/cli v0.19.0/go.mod h1:OKqn4Ps6y2cxUPBBxNfHBF5zRe4gIJk5a8u5SKnNuXs=
 go.followtheprocess.codes/diff v0.1.1 h1:pQpnow+Uj39S4xxNC6FLLfsJnolVM5+a90EIo5QZN6s=
 go.followtheprocess.codes/diff v0.1.1/go.mod h1:bDSZPC9CvkRr8HlOwjE1bl/8qFAmiA3LVtkThRnniis=
+go.followtheprocess.codes/diff v0.2.0 h1:NuEPvXSUEIeBqpSukuhkAUchS1EaiH7PYSj9zesd8Uc=
+go.followtheprocess.codes/diff v0.2.0/go.mod h1:bDSZPC9CvkRr8HlOwjE1bl/8qFAmiA3LVtkThRnniis=
 go.followtheprocess.codes/hue v1.0.0 h1:0fYXAGR1o+w7Vja+Q+iVtqeEP3/CE6ET/pniyl8e9yo=
 go.followtheprocess.codes/hue v1.0.0/go.mod h1:gSn5xK6KJapih+eFgQk3woo1qg3/rx9XSrAanUIuDr8=
 go.followtheprocess.codes/hue v1.1.0 h1:bPq21YLdWxQ0ki4lIvXCYtgutaGaDUYaSIENDdrrlNQ=
@@ -16,6 +18,8 @@ go.followtheprocess.codes/test v1.1.0 h1:1v2JyMd3STr7dIXzcHEhct2qvS8/mTtGYbSyhpR
 go.followtheprocess.codes/test v1.1.0/go.mod h1:BHZi5SZahJw01xcuc7EgrlyzX7zJLXAWy11rOR9geVw=
 go.followtheprocess.codes/test v1.2.0 h1:MWuEVS7ijQLp9qCGYNmzTazWIfEL/TbQid4PnaVFzaQ=
 go.followtheprocess.codes/test v1.2.0/go.mod h1:ZbzmY8F5w44x9kk1vdvJlBu+9dhunHtXf/A1ydXaYP4=
+go.followtheprocess.codes/test v1.2.2 h1:iaUSB6BhzH/UAsVMhMjUW1uSVn8GMa2GgqPMqwxGwuo=
+go.followtheprocess.codes/test v1.2.2/go.mod h1:/Lq3YrwTqU/tb1wbO+Kt7Gs1I3qzFu/o/CUykOavoVA=
 go.followtheprocess.codes/txtar v0.8.0 h1:vQJbo/asKBpuzub+Wok6vKr9lPt+Q8qdY7mPEPYZbHg=
 go.followtheprocess.codes/txtar v0.8.0/go.mod h1:hi6y/ZExrTIZ7BzydWIIdsxrWd1WX0cY3a7c+ibLl5E=
 go.yaml.in/yaml/v4 v4.0.0-rc.3 h1:3h1fjsh1CTAPjW7q/EMe+C8shx5d8ctzZTrLcs/j8Go=
